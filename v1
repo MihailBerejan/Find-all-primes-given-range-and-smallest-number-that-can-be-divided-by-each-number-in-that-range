@@ -55,7 +55,8 @@ while True:
     if not continuare():
         break
         
-        
+      
+OUTPUTS:
 Which is the maximum range: 10
 
 List of primes in range [0, 10] is:
