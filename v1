@@ -1,0 +1,118 @@
+'''
+Find all primes in a given range and the smallest number that can be divided by each number in that range
+'''
+
+def continuare():
+    
+    return input('\nDo you want to generate a new prime? Enter Yes or No: ').lower().startswith('y')
+
+import re
+from functools import reduce
+
+while True:
+    #Main starts here
+    
+    maxp = int(input('Which is the maximum range: '))
+    def este_prim(n):
+        return re.compile(r'^1?$|^(11+)\1+$').match('1' * n) is None
+
+    lst = [x for x in range(maxp) if este_prim(x)]
+    print("\nList of primes in range [0, %.0i] is:" %maxp)
+    print(lst)
+    
+    product = 1    
+    for i in range(len(lst)):
+        product = product*lst[i]
+    
+    print("\nThe product of prime numbers in range [1, %.0i] is:" %maxp)
+    print(f"{product:,}")
+    
+    #Check the highest power of each prime in range [0, maxp]
+    matrix_i = []
+    for k in range(len(lst)):
+        matrix_i = matrix_i + [k]
+        matrix_i[k] = []
+        for i in range(len(lst)):
+            if lst[k]**i <= maxp:
+                matrix_i[k] = matrix_i[k] + [i]
+
+    newlist = []
+    for l in range(len(lst)):
+        newlist = newlist + [lst[l]**max(matrix_i[l])]
+    
+    new_product = 1
+    for i in range(len(newlist)):
+        new_product = new_product * newlist[i]
+    print("\nList of highest primes powers in range [0, %.0i] is:" %maxp)
+    print(sorted(newlist))
+    print("\nThe smallest positive number that is evenly divisible by all of the numbers from 1 to %.0i is:" %maxp)
+    print(f"{new_product:,}")
+    del(lst)
+    del matrix_i
+    del(newlist)
+    #Main ends here
+    
+    if not continuare():
+        break
+        
+        
+Which is the maximum range: 10
+
+List of primes in range [0, 10] is:
+[2, 3, 5, 7]
+
+The product of prime numbers in range [1, 10] is:
+210
+
+List of highest primes powers in range [0, 10] is:
+[5, 7, 8, 9]
+
+The smallest positive number that is evenly divisible by all of the numbers from 1 to 10 is:
+2,520
+
+Do you want to generate a new prime? Enter Yes or No: y
+Which is the maximum range: 20
+
+List of primes in range [0, 20] is:
+[2, 3, 5, 7, 11, 13, 17, 19]
+
+The product of prime numbers in range [1, 20] is:
+9,699,690
+
+List of highest primes powers in range [0, 20] is:
+[5, 7, 9, 11, 13, 16, 17, 19]
+
+The smallest positive number that is evenly divisible by all of the numbers from 1 to 20 is:
+232,792,560
+
+Do you want to generate a new prime? Enter Yes or No: y
+Which is the maximum range: 30
+
+List of primes in range [0, 30] is:
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+The product of prime numbers in range [1, 30] is:
+6,469,693,230
+
+List of highest primes powers in range [0, 30] is:
+[7, 11, 13, 16, 17, 19, 23, 25, 27, 29]
+
+The smallest positive number that is evenly divisible by all of the numbers from 1 to 30 is:
+2,329,089,562,800
+
+Do you want to generate a new prime? Enter Yes or No: y
+Which is the maximum range: 40
+
+List of primes in range [0, 40] is:
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+
+The product of prime numbers in range [1, 40] is:
+7,420,738,134,810
+
+List of highest primes powers in range [0, 40] is:
+[7, 11, 13, 17, 19, 23, 25, 27, 29, 31, 32, 37]
+
+The smallest positive number that is evenly divisible by all of the numbers from 1 to 40 is:
+5,342,931,457,063,200
+
+Do you want to generate a new prime? Enter Yes or No: n
