@@ -1,0 +1,58 @@
+'''
+Find all primes in a given range and the smallest number that can be divided by each number in that range v2 (faster)
+'''
+
+def continuare():
+    
+    return input('\nDo you want to generate a new prime? Enter Yes or No: ').lower().startswith('y')
+
+while True:
+    #Main starts here
+    
+    maxp = int(input('Which is the maximum range: '))
+    def get_primes(n):
+        numbers = set(range(n, 1, -1))
+        primes = []
+        while numbers:
+            p = numbers.pop()
+            primes.append(p)
+            numbers.difference_update(set(range(p*2, n+1, p)))
+        return primes
+    lop = get_primes(maxp)
+    print("\nList of primes in range [0, %.0i] is:" %maxp)
+    print(lop)
+    
+    product = 1    
+    for i in range(len(lop)):
+        product = product*lop[i]
+    
+    print("\nThe product of prime numbers in range [1, %.0i] is:" %maxp)
+    print(f"{product:,}")
+    
+    #Check the highest power of each prime in range [0, maxp]
+    matrix_i = []
+    for k in range(len(lop)):
+        matrix_i = matrix_i + [k]
+        matrix_i[k] = []
+        for i in range(len(lop)):
+            if lop[k]**i <= maxp:
+                matrix_i[k] = matrix_i[k] + [i]
+
+    newlist = []
+    for l in range(len(lop)):
+        newlist = newlist + [lop[l]**max(matrix_i[l])]
+    
+    new_product = 1
+    for i in range(len(newlist)):
+        new_product = new_product * newlist[i]
+    print("\nList of highest primes powers in range [0, %.0i] is:" %maxp)
+    print(sorted(newlist))
+    print("\nThe smallest positive number that is evenly divisible by all of the numbers from 1 to %.0i is:" %maxp)
+    print(f"{new_product:,}")
+    del(lop)
+    del matrix_i
+    del(newlist)
+    #Main ends here
+    
+    if not continuare():
+        break
